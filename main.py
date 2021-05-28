@@ -17,6 +17,11 @@ leagues_list = []
 for i in leagues:
     leagues_list.append(i.get('id'))
 
+leagues_list.pop(2)
+leagues_list.pop(2)
+leagues_list.pop(5)
+leagues_list.pop(4)
+
 for i, item in enumerate(leagues_list):
     print((i - 1) + 1, item)
 print('Выберете лигу:')
