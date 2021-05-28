@@ -24,10 +24,6 @@ choise_league = leagues_list[int(input())]
 url_currency += choise_league
 
 
-def get_exa_value():
-    return get_currency_price("exalted")
-
-
 def get_currency_price(want, have='chaos', head=10):
     myobj = {
         "exchange": {
