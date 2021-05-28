@@ -81,5 +81,5 @@ while True:
     while int(x) < total:
         count = count - 1
         total = count * price
-    print("Вы получите", int(total + price), "хаосов за", int(count + 1))
-    print("~price ", int(total + price), "/", int(count + 1), " chaos", sep="")
+    print(f"Вы получите {int(total + price)} хаосов за {int(count + 1)}")
+    print(f"~price {int(total + price)}/{int(count + 1)} chaos", sep="")
