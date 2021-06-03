@@ -17,15 +17,13 @@ leagues_list = []
 for i in leagues:
     leagues_list.append(i.get('id'))
 
+leagues_list = leagues_list[0:2] + leagues_list[4:6]
+
 for i, item in enumerate(leagues_list):
     print((i - 1) + 1, item)
 print('Выберете лигу:')
 choise_league = leagues_list[int(input())]
 url_currency += choise_league
-
-
-def get_exa_value():
-    return get_currency_price("exalted")
 
 
 def get_currency_price(want, have='chaos', head=10):
@@ -81,5 +79,5 @@ while True:
     while int(x) < total:
         count = count - 1
         total = count * price
-    print("Вы получите", int(total + price), "хаосов за", int(count + 1))
-    print("~price ", int(total + price), "/", int(count + 1), " chaos", sep="")
+    print(f"Вы получите {int(total + price)} хаосов за {int(count + 1)}")
+    print(f"~price {int(total + price)}/{int(count + 1)} chaos", sep="")
