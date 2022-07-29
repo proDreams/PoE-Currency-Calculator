@@ -1,8 +1,8 @@
 # PoE-Currency-Calculator
 ############################
-#NOT WORK AT THIS MOMENT!###
-#НЕ РАБОТАЕТ!###############
+#NOT WORK AT THIS MOMENT!
+#НЕ РАБОТАЕТ!
 ############################
-#DEVELOPEMENT PAUSED!#######
-#РАЗРАБОТКА ПРИОСТАНОВЛЕНА!#
+#DEVELOPEMENT PAUSED!
+#РАЗРАБОТКА ПРИОСТАНОВЛЕНА!
 ############################
