@@ -7,26 +7,29 @@ url_currency = 'https://www.pathofexile.com/api/trade/exchange/'
 url_get = 'https://www.pathofexile.com/api/trade/fetch/'
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212',
-    'From': 'youremail@domain.com'  # This is another valid field
+    'From': 'youremail@domain.com'
 }
 
-response = requests.get(url_leagues, headers=headers)
-leagues = json.loads(response.text)
-leagues_list = []
 
-for i in leagues:
-    leagues_list.append(i.get('id'))
+def get_leagues():
+    response = requests.get(url_leagues, headers=headers)
+    leagues = json.loads(response.text)
+    leagues_list = []
 
-leagues_list = leagues_list[0:2] + leagues_list[4:6]
+    for i in leagues:
+        leagues_list.append(i.get('id'))
 
-for i, item in enumerate(leagues_list):
-    print((i - 1) + 1, item)
-print('Выберете лигу:')
-choice_league = leagues_list[int(input())]
-url_currency += choice_league
+    leagues_list = leagues_list[0:2] + leagues_list[4:6]
+
+    for i, item in enumerate(leagues_list):
+        print(i, item)
+    print('Выберете лигу:')
+    choice_league = leagues_list[int(input())]
+    global url_currency
+    url_currency += choice_league
 
 
-def get_currency_price(want, have='chaos', head=10):
+def get_currency_price(want, have='chaos'):
     price_catalog = []
     myobj = {
         "exchange": {
@@ -47,14 +50,16 @@ def get_currency_price(want, have='chaos', head=10):
         if counter == 15:
             break
 
-    price = round((stat.mean(price_catalog[2:]) + stat.median(price_catalog[2:])) / 2, 4)
+    total_price = round((stat.mean(price_catalog[2:]) + stat.median(price_catalog[2:])) / 2, 4)
 
-    return price
+    return total_price
 
 
-a = ['wisdom', 'portal', 'alt', 'alch', 'gcp', 'fusing', 'chrome', 'jewellers', 'orb-of-horizons', 'transmute', 'aug',
+currencies_list = ['wisdom', 'portal', 'alt', 'alch', 'gcp', 'fusing', 'chrome', 'jewellers', 'orb-of-horizons', 'transmute', 'aug',
      'p', 'silver', 'chance', 'chisel', 'scour', 'blessed', 'regret', 'regal', 'vaal', 'orb-of-binding', 'engineers',
      'harbingers-orb', 'scrap', 'whetstone', 'bauble']
+
+get_leagues()
 
 while True:
 
@@ -69,7 +74,7 @@ while True:
 # 24 - Точильный камень  25 - Стекольная масса                                                   #
 ##################################################################################################
     """)
-    currency = a[int(input('Выберете вылюту: '))]
+    currency = currencies_list[int(input('Выберете вылюту: '))]
     count = float(input("Введите количество валюты: "))
     price = get_currency_price(currency)
     total = count * price
