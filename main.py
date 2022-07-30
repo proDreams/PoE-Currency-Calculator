@@ -23,8 +23,7 @@ def get_leagues():
 
     for i, item in enumerate(leagues_list):
         print(i, item)
-    print('Выберете лигу:')
-    choice_league = leagues_list[int(input())]
+    choice_league = leagues_list[int(input('Выберете лигу: '))]
     global url_currency
     url_currency += choice_league
 
