@@ -22,11 +22,12 @@ leagues_list = leagues_list[0:2] + leagues_list[4:6]
 for i, item in enumerate(leagues_list):
     print((i - 1) + 1, item)
 print('Выберете лигу:')
-choise_league = leagues_list[int(input())]
-url_currency += choise_league
+choice_league = leagues_list[int(input())]
+url_currency += choice_league
 
 
 def get_currency_price(want, have='chaos', head=10):
+    price_catalog = []
     myobj = {
         "exchange": {
             "want": [want],
@@ -37,28 +38,24 @@ def get_currency_price(want, have='chaos', head=10):
     }
     respond = requests.post(url_currency, json=myobj, headers=headers)
     respond = json.loads(respond.text)
-    respond_id = respond["id"]
-    # ignore first 2 listing
-    respond_result = respond["result"][2:head + 2]
+    counter = 0
+    for dd in respond["result"]:
+        chaos = (respond['result'][dd]['listing']['offers'][0]['exchange']['amount'])
+        curr = (respond['result'][dd]['listing']['offers'][0]['item']['amount'])
+        price_catalog.append(chaos / curr)
+        counter += 1
+        if counter == 15:
+            break
 
-    myobj = ",".join(respond_result)
-    url_get_item = url_get + '%s?query=%s' % (myobj, respond_id)
-    respond = requests.get(url_get_item, headers=headers)
-    respond = json.loads(respond.text)
+    price = round((stat.mean(price_catalog[2:]) + stat.median(price_catalog[2:])) / 2, 4)
 
-    respond_result = respond["result"]
-    price_catalog = []
-    for x in respond_result:
-        listing = x["listing"]
-        price = listing["price"]
-        price_catalog.append(price["amount"])
-    price = round((stat.mean(price_catalog) + stat.median(price_catalog)) / 2, 4)
     return price
 
 
 a = ['wisdom', 'portal', 'alt', 'alch', 'gcp', 'fusing', 'chrome', 'jewellers', 'orb-of-horizons', 'transmute', 'aug',
      'p', 'silver', 'chance', 'chisel', 'scour', 'blessed', 'regret', 'regal', 'vaal', 'orb-of-binding', 'engineers',
      'harbingers-orb', 'scrap', 'whetstone', 'bauble']
+
 while True:
 
     print("""
