@@ -32,7 +32,8 @@ def get_currency_price(want, have='chaos', head=10):
             "want": [want],
             "have": [have],
             "status": "online"
-        }
+        },
+        "engine": "new"
     }
     respond = requests.post(url_currency, json=myobj, headers=headers)
     respond = json.loads(respond.text)
