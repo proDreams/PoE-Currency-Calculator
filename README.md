@@ -13,5 +13,7 @@ PoE-Currency-Calculator - простой калькулятор валют.
 
 ## Требования
 Для работы программы, требуется наличие модулей requests и statistics
-- pip install requests
-- pip install statistics
+```
+pip install requests
+pip install statistics
+```
