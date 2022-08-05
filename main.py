@@ -1,10 +1,12 @@
 import requests
 import json
 import statistics as stat
+import pickle
 
 url_leagues = 'https://api.pathofexile.com/leagues'
 url_currency = 'https://www.pathofexile.com/api/trade/exchange/'
 url_get = 'https://www.pathofexile.com/api/trade/fetch/'
+db_url = 'https://github.com/proDreams/PoE-Trade-About-Parser/raw/master/bd.pkl'
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212',
     'From': 'youremail@domain.com'
@@ -54,32 +56,29 @@ def get_currency_price(want, have='chaos'):
     return total_price
 
 
-currencies_list = ['wisdom', 'portal', 'alt', 'alch', 'gcp', 'fusing', 'chrome', 'jewellers', 'orb-of-horizons', 'transmute', 'aug',
-     'orb-of-unmaking', 'rogues-marker', 'chance', 'chisel', 'scour', 'blessed', 'regret', 'regal', 'vaal', 'orb-of-binding', 'engineers',
-     'harbingers-orb', 'scrap', 'whetstone', 'bauble', 'splinter-xoph', 'splinter-tul', 'splinter-esh', 'splinter-uul', 'splinter-chayula',
-     'simulacrum-splinter', 'dusk', 'mid', 'dawn', 'noon', 'offer', 'divine-vessel']
-
 get_leagues()
 
-while True:
+db_file = requests.get(db_url)
+with open("bd.pkl", "wb") as code:
+    code.write(db_file.content)
 
-    print("""
-###################################################################################################
-# Валюта                                                                                          #
-# 0  - Свиток мудрости    1  - Свиток портала    2  - Сфера перемен      3  - Сфера алхимии       #
-# 4  - Призма камнереза   5  - Сфера соединения  6  - Цветная сфера      7  - Сфера златокузнеца  #
-# 8  - Сфера горизонтов   9  - Сфера превращения 10 - Сфера усиления     11 - Сфера небытия       #
-# 12 - Разбойничий жетон  13 - Сфера удачи       14 - Резец картографа   15 - Сфера очищения      #
-# 16 - Благодатная сфера  17 - Сфера раскаяния   18 - Сфера царей        19 - Сфера ваал          #
-# 20 - Сфера сплетения    21 - Сфера инженера    22 - Сфера Предвестника 23 - Деталь доспеха      #
-# 24 - Точильный камень   25 - Стекольная масса                                                   #
-# Фрагменты, осколки, прочее                                                                      #
-# 26 - Осколок Ксофа      27 - Осколок Тул       28 - Осколок Иш         29 - Осколок Уул-Нетол   #
-# 30 - Осколок Чаюлы      31 - Осколок Симулякра 32 - Жертва на закате   33 - Жертва в полночь    #
-# 34 - Жертва на рассвете 35 - Жертва в полдень  36 - Подношение богине  37 - Божественный сосуд  #
-###################################################################################################
-    """)
-    currency = currencies_list[int(input('Выберете вылюту: '))]
+with open('bd.pkl', 'rb') as f:
+    loaded_dict = pickle.load(f)
+
+
+def get_list(dic, msg):
+    temp_list = []
+
+    for i, item in enumerate(dic):
+        temp_list.append(item)
+        print(i, item)
+    return temp_list[int(input(msg))]
+
+
+while True:
+    category = get_list(loaded_dict, 'Выберите категорию')
+    item = get_list(loaded_dict[category], 'Выберите валюту')
+    currency = loaded_dict[category][item]
     count = float(input("Введите количество валюты: "))
     price = get_currency_price(currency)
     total = count * price
