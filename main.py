@@ -2,7 +2,6 @@ import requests
 import json
 import statistics as stat
 import pickle
-from prettytable import PrettyTable
 
 url_leagues = 'https://api.pathofexile.com/leagues'
 url_currency = 'https://www.pathofexile.com/api/trade/exchange/'
