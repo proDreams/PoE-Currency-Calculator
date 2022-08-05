@@ -2,6 +2,7 @@ import requests
 import json
 import statistics as stat
 import pickle
+from prettytable import PrettyTable
 
 url_leagues = 'https://api.pathofexile.com/leagues'
 url_currency = 'https://www.pathofexile.com/api/trade/exchange/'
@@ -66,18 +67,21 @@ with open('bd.pkl', 'rb') as f:
     loaded_dict = pickle.load(f)
 
 
-def get_list(dic, msg):
-    temp_list = []
-
-    for i, item in enumerate(dic):
-        temp_list.append(item)
-        print(i, item)
+def get_list(dic, msg, type):
+    temp_list = [i for i in dic]
+    c = 0
+    for n, item in enumerate(temp_list):
+        print(str(n).ljust(2), item.ljust(25), end=' ')
+        c += 1
+        if c % 3 == 0:
+            print()
+    print()
     return temp_list[int(input(msg))]
 
 
 while True:
-    category = get_list(loaded_dict, 'Выберите категорию')
-    item = get_list(loaded_dict[category], 'Выберите валюту')
+    category = get_list(loaded_dict, 'Выберите Раздел: ', ['Выберите', 'Раздел', ':'])
+    item = get_list(loaded_dict[category], 'Выберите валюту: ', 'Валюта')
     currency = loaded_dict[category][item]
     count = float(input("Введите количество валюты: "))
     price = get_currency_price(currency)
@@ -87,4 +91,4 @@ while True:
         count = count - 1
         total = count * price
     print(f"Вы получите {int(total + price)} хаосов за {int(count + 1)}")
-    print(f"~price {int(total + price)}/{int(count + 1)} chaos", sep="")
+    print(f"~price {int(total + price)}/{int(count + 1)} chaos", sep="", end='\n\n')
