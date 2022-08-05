@@ -1,5 +1,5 @@
-# PoE-Currency-Calculator  
-PoE-Currency-Calculator - простой калькулятор валют.  
+# Path of Exile Currency calculator  
+Калькулятор игровой валюты.  
 Позволяет быстро оценивать любое количество валюты и выводить её стоимость в сферах хаоса.  
 Главное удобство заключается в том, что программа не просто выводит стоимость всей валюты в хаосах, а высчитывает сколько валюты нужно выставить, за максимальное количесвто сфер хаоса.  
   
@@ -13,5 +13,7 @@ PoE-Currency-Calculator - простой калькулятор валют.
 
 ## Требования
 Для работы программы, требуется наличие модулей requests и statistics
-- pip install requests
-- pip install statistics
+```
+pip install requests
+pip install statistics
+```
