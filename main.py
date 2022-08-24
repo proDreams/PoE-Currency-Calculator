@@ -61,7 +61,7 @@ def get_currency_price(want, have='chaos'):
         curr = (respond['result'][dd]['listing']['offers'][0]['item']['amount'])
         price_catalog.append(chaos / curr)
         counter += 1
-        if counter == 15:
+        if counter == 20:
             break
 
     total_price = round((stat.mean(price_catalog[2:]) + stat.median(price_catalog[2:])) / 2, 4)
